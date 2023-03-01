@@ -49,20 +49,22 @@ def new_property():
         db.session.add(new_property)
         db.session.commit()
         flash("New property successfully added")
-        return redirect(url_for("properties"))
+        return redirect(url_for('view_properties'))
     return render_template("new_property.html", form=property_form)
 
 
 @app.route('/properties')
 def view_properties():
-    # properties = db.session.execute(db.select(Property)).scalars()
-    return render_template("properties.html")
+    properties = db.session.execute(db.select(Property)).scalars()
+    return render_template("properties.html", properties=properties)
+    # return render_template("properties.html")
 
 
 @app.route('/properties/<propertyid>')
 def show_property(id):
     property = db.session.execute(db.select(Property).filter_by(id=id)).scalar()
     return render_template("property.html", property=property)
+    # return render_template("property.html")
 
 
 ###
