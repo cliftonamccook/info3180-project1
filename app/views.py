@@ -1,6 +1,9 @@
-from app import app
+import os
+from app import app, db
 from flask import render_template, request, redirect, url_for, flash
-from forms import Property_Form
+from app.forms import Property_Form
+from app.models import Property
+from werkzeug.utils import secure_filename
 
 
 ###
@@ -23,20 +26,44 @@ def about():
 def new_property():
     property_form = Property_Form()
     if property_form.validate_on_submit():
-        pass
+        title = property_form.title.data
+        _type = property_form.type.data
+        location = property_form.location.data
+        price = property_form.price.data
+        description = property_form.description.data
+        bedrooms = property_form.bedrooms.data
+        bathrooms = property_form.bathrooms.data
+        photo = property_form.photo.data
+        photo_filename = secure_filename(photo.filename)
+        photo.save(os.path.join(app.config['UPLOAD_FOLDER'], photo_filename))
+        new_property = Property(
+            title=title, 
+            type=_type, 
+            location=location, 
+            price=price, 
+            description=description, 
+            bedrooms=bedrooms, 
+            bathrooms=bathrooms,
+            photo_filename=photo_filename
+            )
+        db.session.add(new_property)
+        db.session.commit()
         flash("New property successfully added")
         return redirect(url_for("properties"))
     return render_template("new_property.html", form=property_form)
 
 
 @app.route('/properties')
-def view_property():
-    pass
+def view_properties():
+    # properties = db.session.execute(db.select(Property)).scalars()
+    return render_template("properties.html")
 
 
 @app.route('/properties/<propertyid>')
 def show_property(id):
-    pass
+    property = db.session.execute(db.select(Property).filter_by(id=id)).scalar()
+    return render_template("property.html", property=property)
+
 
 ###
 # The functions below should be applicable to all Flask apps.
