@@ -27,7 +27,7 @@ def new_property():
     property_form = Property_Form()
     if property_form.validate_on_submit():
         title = property_form.title.data
-        _type = property_form.type.data
+        prop_type = property_form.property_type.data
         location = property_form.location.data
         price = property_form.price.data
         description = property_form.description.data
@@ -36,16 +36,7 @@ def new_property():
         photo = property_form.photo.data
         photo_filename = secure_filename(photo.filename)
         photo.save(os.path.join(app.config['UPLOAD_FOLDER'], photo_filename))
-        new_property = Property(
-            title=title, 
-            type=_type, 
-            location=location, 
-            price=price, 
-            description=description, 
-            bedrooms=bedrooms, 
-            bathrooms=bathrooms,
-            photo_filename=photo_filename
-            )
+        new_property = Property(title, prop_type, location, price, description, bedrooms, bathrooms, photo_filename)
         db.session.add(new_property)
         db.session.commit()
         flash("New property successfully added")

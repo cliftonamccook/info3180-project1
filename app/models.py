@@ -6,22 +6,22 @@ class Property(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(256))
-    bedrooms = db.Column(db.String(3))
-    bathrooms = db.Column(db.String(3))
+    property_type = db.Column(db.String(10))
     location = db.Column(db.String(256))
     price = db.Column(db.String(15))
-    type = db.Column(db.String(10))
     description = db.Column(db.Text())
+    bedrooms = db.Column(db.String(3))
+    bathrooms = db.Column(db.String(3))
     photo_filename = db.Column(db.String(256))
 
 
-    def __init__(self, title, _type, location, price, description, bedrooms, bathrooms, photo_filename):
+    def __init__(self, title, prop_type, location, price, description, bedrooms, bathrooms, photo_filename):
         self.title = title
         self.bedrooms = bedrooms
         self.bathrooms = bathrooms
         self.location = location
         self.price = price
-        self.type = _type
+        self.property_type = prop_type
         self.description = description
         self.photo_filename = photo_filename
 
