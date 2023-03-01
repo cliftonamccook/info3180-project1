@@ -1,12 +1,6 @@
-"""
-Flask Documentation:     https://flask.palletsprojects.com/
-Jinja2 Documentation:    https://jinja.palletsprojects.com/
-Werkzeug Documentation:  https://werkzeug.palletsprojects.com/
-This file contains the routes for your application.
-"""
-
 from app import app
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
+from forms import Property_Form
 
 
 ###
@@ -24,6 +18,25 @@ def about():
     """Render the website's about page."""
     return render_template('about.html', name="Mary Jane")
 
+
+@app.route('/properties/create', methods=['GET', 'POST'])
+def new_property():
+    property_form = Property_Form()
+    if property_form.validate_on_submit():
+        pass
+        flash("New property successfully added")
+        return redirect(url_for("properties"))
+    return render_template("new_property.html", form=property_form)
+
+
+@app.route('/properties')
+def view_property():
+    pass
+
+
+@app.route('/properties/<propertyid>')
+def show_property(id):
+    pass
 
 ###
 # The functions below should be applicable to all Flask apps.
