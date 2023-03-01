@@ -1,3 +1,61 @@
 body {
     padding-top: 5rem;
+    background-color: #f3f4f6;
+}
+
+header {
+    background-color: #14b7a6;
+}
+
+.field-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.field-group {
+    display: flex;
+    flex-direction: row;
+    column-gap: 30px;
+}
+
+textarea {
+    resize: none;
+    height: 100px;
+    width: 500px;
+    border-style:ridge;
+}
+
+input[name="title"] {
+    width: 500px;
+    border-style:ridge;
+}
+
+input[name="location"], input[name="bedrooms"], input[name="bathrooms"], input[name="price"] {
+    width: 200px;
+    border-style:ridge;
+}
+
+input, textarea {
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.form-container {
+    border: white solid 1px;
+    width: 600px;
+    padding: 30px 50px 20px 30px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.form-container button {
+    background-color: #3475e3;
+    border-radius: 5px;
+    color: white;
+    padding: 10px;
+    border: none;
+}
+
+label {
+    font-weight: bold;
 }
