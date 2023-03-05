@@ -3,8 +3,13 @@ body {
     background-color: #f3f4f6;
 }
 
-header {
+.navbar.navbar-expand-lg.fixed-top {
     background-color: #14b7a6;
+    color: white;
+}
+
+.nav-link, .navbar-brand {
+    color: white;
 }
 
 .field-container {
@@ -175,4 +180,8 @@ p.card-text.property-description {
 
 .bedroom-bathroom-group .icon {
         padding-right: 10px;
+}
+
+.card-custom {
+    max-width: 300px;
 }
