@@ -1,6 +1,6 @@
 import os
 from app import app, db
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, send_from_directory
 from app.forms import Property_Form
 from app.models import Property
 from werkzeug.utils import secure_filename
@@ -46,16 +46,15 @@ def new_property():
 
 @app.route('/properties')
 def view_properties():
+    """show all properties"""
     properties = db.session.execute(db.select(Property)).scalars()
     return render_template("properties.html", properties=properties)
-    # return render_template("properties.html")
 
 
 @app.route('/properties/<propertyid>')
-def show_property(id):
-    property = db.session.execute(db.select(Property).filter_by(id=id)).scalar()
+def show_property_info(propertyid):
+    property = db.session.execute(db.select(Property).filter_by(id=propertyid)).scalar()
     return render_template("property.html", property=property)
-    # return render_template("property.html")
 
 
 ###
@@ -94,3 +93,9 @@ def add_header(response):
 def page_not_found(error):
     """Custom 404 page."""
     return render_template('404.html'), 404
+
+
+@app.route('/properties/<propertyid>/photo')
+def get_property_image(propertyid):
+    property = db.session.execute(db.select(Property).filter_by(id=propertyid)).scalar()
+    return send_from_directory(os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER']), property.photo_filename)
