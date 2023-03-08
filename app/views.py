@@ -24,6 +24,7 @@ def about():
 
 @app.route('/properties/create', methods=['GET', 'POST'])
 def new_property():
+    """Add a new property to database"""
     property_form = Property_Form()
     if property_form.validate_on_submit():
         title = property_form.title.data
@@ -46,7 +47,7 @@ def new_property():
 
 @app.route('/properties')
 def view_properties():
-    """show all properties"""
+    """Show all properties"""
     properties = db.session.execute(db.select(Property)).scalars()
     return render_template("properties.html", properties=properties)
 
